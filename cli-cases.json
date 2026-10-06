@@ -1,0 +1,4 @@
+[
+  {"id":"cli-linux","project":"cli","repository":"cli/cli","sha":"17142e08db2e300b37e6da1ddcfb651eb6d9c587","runner":"ubuntu-latest","versions":["1.27.1"],"dependency":"go.mod","commands":[["go","mod","download"],["go","test","-race","-tags=integration","./..."],["go","build","-v","./cmd/gh"]],"environment":{},"upstream":".github/workflows/go.yml:build"},
+  {"id":"cli-windows","project":"cli","repository":"cli/cli","sha":"17142e08db2e300b37e6da1ddcfb651eb6d9c587","runner":"windows-latest","versions":["1.27.1"],"dependency":"go.mod","commands":[["go","mod","download"],["go","test","-race","-tags=integration","./..."],["go","build","-v","./cmd/gh"]],"environment":{},"upstream":".github/workflows/go.yml:build"}
+]

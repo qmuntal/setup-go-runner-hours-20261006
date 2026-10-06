@@ -20,7 +20,8 @@ import time
 import psutil
 
 ROOT = pathlib.Path(__file__).resolve().parent
-CASES = {case["id"]: case for case in json.loads((ROOT / "cases.json").read_text())}
+CASES = {case["id"]: case for file in ["cases.json", "cli-cases.json"]
+         for case in json.loads((ROOT / file).read_text())}
 BASELINE = "90ad2b35f69faf97585ad74d28fa006d2739b7af"
 CANDIDATE = "ad9941188fbcb38febe37eac394b80bd9bc34fc8"
 
