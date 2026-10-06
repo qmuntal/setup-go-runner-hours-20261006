@@ -178,6 +178,8 @@ def main():
                 shutil.rmtree(directory)
         phase = temp / f"{variant}-{scenario}"
         phase.mkdir()
+        for command_file in ["outputs", "states", "environment", "paths"]:
+            (phase / command_file).touch()
         env = dict(os.environ)
         env.update({"GITHUB_WORKSPACE": str(source), "GOMODCACHE": str(modules), "GOCACHE": str(build),
                 "GOTOOLCHAIN": "local", "GOTELEMETRY": "off",
