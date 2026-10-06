@@ -173,9 +173,16 @@ def main():
               "measurements": []}
 
     def execute(variant, scenario, order_index):
+        # Each logical CI job starts with the same checkout. `make test` may
+        # tidy the exp module, so reset tracked sources between measurements.
+        subprocess.run(["git", "restore", "--worktree", "--", "."], cwd=source, check=True)
         for directory in [modules, build]:
             if directory.exists():
-                shutil.rmtree(directory)
+                if directory == modules:
+                    cleanup_env = dict(os.environ, GOMODCACHE=str(modules), GOTOOLCHAIN="local")
+                    subprocess.run(["go", "clean", "-modcache"], env=cleanup_env, cwd=source, check=True)
+                else:
+                    shutil.rmtree(directory)
         phase = temp / f"{variant}-{scenario}"
         phase.mkdir()
         for command_file in ["outputs", "states", "environment", "paths"]:
