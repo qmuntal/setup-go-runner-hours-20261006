@@ -20,7 +20,7 @@ import time
 import psutil
 
 ROOT = pathlib.Path(__file__).resolve().parent
-CASES = {case["id"]: case for file in ["cases.json", "cli-cases.json"]
+CASES = {case["id"]: case for file in ["cases.json", "cli-cases.json", "cli-first-writer-cases.json"]
          for case in json.loads((ROOT / file).read_text())}
 BASELINE = "90ad2b35f69faf97585ad74d28fa006d2739b7af"
 CANDIDATE = "ad9941188fbcb38febe37eac394b80bd9bc34fc8"
@@ -179,11 +179,17 @@ def main():
               "randomizationSeed": hashlib.sha256(nonce.encode()).hexdigest(),
               "memoryMetric": "100ms sampled sum of process-tree RSS; shared pages can be double counted",
               "measurements": []}
+    first_writer = case.get("measurementMode") == "first-writer-cache-path"
 
     def execute(variant, scenario, order_index):
         # Each logical CI job starts with the same checkout. `make test` may
         # tidy the exp module, so reset tracked sources between measurements.
         subprocess.run(["git", "restore", "--worktree", "--", "."], cwd=source, check=True)
+        if first_writer:
+            for file in [source / "bin" / "gh", source / "bin" / "gh.exe",
+                         source / "script" / "build", source / "script" / "build.exe"]:
+                if file.exists():
+                    file.unlink()
         for directory in [modules, build]:
             if directory.exists():
                 if directory == modules:
@@ -220,7 +226,8 @@ def main():
         if f"go{args.version} " not in actual_version:
             raise RuntimeError(f"Wrong toolchain: {actual_version}")
         workload = []
-        for index, command in enumerate(case["commands"]):
+        commands = [] if first_writer and scenario == "warm" else case["commands"]
+        for index, command in enumerate(commands):
             if os.name == "nt" and command[0] == "bash":
                 # Match GitHub's `shell: bash`, not System32/bash.exe (WSL).
                 git = pathlib.Path(shutil.which("git", path=env["PATH"]))
