@@ -11,6 +11,7 @@ import json
 import os
 import pathlib
 import random
+import re
 import shutil
 import subprocess
 import threading
@@ -68,7 +69,7 @@ def monitored(args, env, cwd, phase_file):
 
     reader = threading.Thread(target=stream, daemon=True)
     reader.start()
-    peak_rss = peak_private = 0
+    peak_rss = peak_private = peak_uss = 0
     measurements = 0
     names = set()
     seen_cpu = {}
@@ -80,12 +81,16 @@ def monitored(args, env, cwd, phase_file):
             descendants = [tree] + tree.children(recursive=True)
         except psutil.Error:
             descendants = []
-        rss = private = 0
+        rss = private = uss = 0
         for item in descendants:
             try:
                 info = item.memory_info()
                 rss += info.rss
                 private += getattr(info, "private", 0)
+                # For the short action phases, also measure unique private
+                # pages rather than presenting summed RSS as physical RAM.
+                if phase_file.name in ["setup.json", "post.json"]:
+                    uss += getattr(item.memory_full_info(), "uss", 0)
                 cpu = item.cpu_times()
                 seen_cpu[(item.pid, item.create_time())] = cpu.user + cpu.system
                 names.add(item.name())
@@ -93,6 +98,7 @@ def monitored(args, env, cwd, phase_file):
                 continue
         peak_rss = max(peak_rss, rss)
         peak_private = max(peak_private, private)
+        peak_uss = max(peak_uss, uss)
         available_min = min(available_min, psutil.virtual_memory().available)
         measurements += 1
         if process.poll() is not None:
@@ -105,6 +111,7 @@ def monitored(args, env, cwd, phase_file):
     result = {"seconds": elapsed, "exitCode": process.returncode,
               "peakProcessTreeRssBytes": peak_rss,
               "peakProcessTreePrivateBytesWindows": peak_private if os.name == "nt" else None,
+              "peakProcessTreeUssBytes": peak_uss if phase_file.name in ["setup.json", "post.json"] else None,
               "minimumSystemAvailableBytes": available_min,
               "sampleCount": measurements, "samplingIntervalSeconds": 0.1,
               "observedProcessNames": sorted(names), "sampledCpuSeconds": sum(seen_cpu.values())}
@@ -247,6 +254,13 @@ def main():
         entries_live = command_json(["gh", "api", f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/caches?per_page=100"])["actions_caches"]
         record["cacheRecords"] = [{key: c[key] for key in ["id", "key", "version", "ref", "size_in_bytes", "created_at"]}
                                    for c in entries_live if c["key"] in keys]
+        record["savedKeys"] = re.findall(r"Cache saved with the key:\s*(\S+)", post_text)
+        record["uploadedBytes"] = sum(c["size_in_bytes"] for c in record["cacheRecords"]
+                                      if c["key"] in record["savedKeys"])
+        if scenario == "warm" and record["savedKeys"]:
+            raise RuntimeError("Warm sample uploaded unexpected cache bytes")
+        if scenario != "warm" and len(record["savedKeys"]) != (1 if variant == "baseline" or scenario == "module-hit" else 2):
+            raise RuntimeError("Measured save did not persist expected cache entries")
         result["measurements"].append(record)
         (out / "sample.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
         print(json.dumps({"variant": variant, "scenario": scenario, "hits": hits,

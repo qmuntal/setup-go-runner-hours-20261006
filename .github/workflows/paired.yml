@@ -15,7 +15,7 @@ permissions:
   contents: read
   actions: write
 concurrency:
-  group: independent-runner-hours
+  group: runner-hours-${{ inputs.sample }}-${{ inputs.case || 'all' }}
   cancel-in-progress: false
 jobs:
   matrix:
