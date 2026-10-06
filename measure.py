@@ -221,6 +221,13 @@ def main():
             raise RuntimeError(f"Wrong toolchain: {actual_version}")
         workload = []
         for index, command in enumerate(case["commands"]):
+            if os.name == "nt" and command[0] == "bash":
+                # Match GitHub's `shell: bash`, not System32/bash.exe (WSL).
+                git = pathlib.Path(shutil.which("git", path=env["PATH"]))
+                git_bash = git.parent.parent / "bin" / "bash.exe"
+                if not git_bash.exists():
+                    raise RuntimeError("Git for Windows bash is unavailable")
+                command = [str(git_bash)] + command[1:]
             stats, _ = monitored(command, env, source, phase / f"workload-{index}.json")
             workload.append(stats)
         # Follow the real runner's ordering: post executes after upstream tests.

@@ -34,7 +34,7 @@ jobs:
           import json, os
           case_filter=os.environ.get('CASE_FILTER')
           cases=json.load(open('cli-cases.json' if case_filter=='cli' else 'cases.json'))
-          include=[{'case':c['id'],'version':v,'runner':c['runner'],'source_repository':c['repository'],'source_sha':c['sha']} for c in cases for v in c['versions'] if not case_filter or case_filter=='cli' or c['id']==case_filter]
+          include=[{'case':c['id'],'version':v,'runner':c['runner'],'source_repository':c['repository'],'source_sha':c['sha']} for c in cases for v in c['versions'] if not case_filter or case_filter=='cli' or c['id']==case_filter or (case_filter=='client' and c['id'].startswith('client-'))]
           if not include: raise RuntimeError('No benchmark cases selected')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('cases='+json.dumps({'include':include})+'\n')
           PY
