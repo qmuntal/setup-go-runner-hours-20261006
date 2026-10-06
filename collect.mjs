@@ -8,10 +8,15 @@ const api=p=>JSON.parse(execFileSync('gh',['api',p],{encoding:'utf8',maxBuffer:1
 const runId=process.argv[2];
 if(!/^\d+$/.test(runId??''))throw Error('Pass completed run ID');
 const run=api(`repos/${repo}/actions/runs/${runId}`);
-if(run.status!=='completed')throw Error('Workflow is not complete');
+if(run.status!=='completed'&&!process.argv.includes('--completed-jobs'))throw Error('Workflow is not complete');
 const dest=path.join(root,'results',runId);
 await fs.mkdir(dest,{recursive:true});
-execFileSync('gh',['run','download',runId,'--repo',repo,'--dir',dest],{stdio:'inherit'});
+const artifacts=api(`repos/${repo}/actions/runs/${runId}/artifacts?per_page=100`).artifacts;
+for(const artifact of artifacts){
+ const target=path.join(dest,artifact.name,'sample.json');
+ if(await fs.stat(target).catch(()=>false))continue;
+ execFileSync('gh',['run','download',runId,'--repo',repo,'--dir',path.dirname(target),'--name',artifact.name],{stdio:'inherit'});
+}
 const rawJobs=[];
 for(let page=1;;page++){const j=api(`repos/${repo}/actions/runs/${runId}/jobs?per_page=100&page=${page}`).jobs;rawJobs.push(...j);if(j.length<100)break;}
 const jobs=rawJobs.map(j=>({id:j.id,name:j.name,conclusion:j.conclusion,startedAt:j.started_at,completedAt:j.completed_at,labels:j.labels,url:j.html_url}));

@@ -1,0 +1,260 @@
+{
+  "window": {
+    "start": "2026-09-06T00:00:00Z",
+    "end": "2026-10-06T00:00:00Z",
+    "days": 30
+  },
+  "counts": [
+    {
+      "caseId": "client-arm64",
+      "version": "1.26.8",
+      "successfulJobs": 127,
+      "exactHits": 109,
+      "misses": 18,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 18
+    },
+    {
+      "caseId": "client-arm64",
+      "version": "1.25.14",
+      "successfulJobs": 1,
+      "exactHits": 0,
+      "misses": 1,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 1
+    },
+    {
+      "caseId": "client-arm64",
+      "version": "1.27.1",
+      "successfulJobs": 127,
+      "exactHits": 110,
+      "misses": 17,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 17
+    },
+    {
+      "caseId": "client-arm64",
+      "version": "unknown",
+      "successfulJobs": 1,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 1,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "client-linux",
+      "version": "1.25.14",
+      "successfulJobs": 1,
+      "exactHits": 0,
+      "misses": 1,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 1
+    },
+    {
+      "caseId": "client-linux",
+      "version": "1.26.8",
+      "successfulJobs": 117,
+      "exactHits": 99,
+      "misses": 18,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 1,
+      "missesWithSameRunOtherVersion": 18
+    },
+    {
+      "caseId": "client-linux",
+      "version": "1.27.1",
+      "successfulJobs": 113,
+      "exactHits": 100,
+      "misses": 13,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "client-windows",
+      "version": "1.26.8",
+      "successfulJobs": 119,
+      "exactHits": 102,
+      "misses": 17,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 17
+    },
+    {
+      "caseId": "client-windows",
+      "version": "1.25.14",
+      "successfulJobs": 1,
+      "exactHits": 0,
+      "misses": 1,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 1
+    },
+    {
+      "caseId": "client-windows",
+      "version": "1.27.1",
+      "successfulJobs": 117,
+      "exactHits": 100,
+      "misses": 17,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 1,
+      "missesWithSameRunOtherVersion": 17
+    },
+    {
+      "caseId": "viper-linux",
+      "version": "1.25.14",
+      "successfulJobs": 6,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 6,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "viper-linux",
+      "version": "1.23.12",
+      "successfulJobs": 3,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 3,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "viper-linux",
+      "version": "1.24.13",
+      "successfulJobs": 3,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 3,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "viper-windows",
+      "version": "1.24.13",
+      "successfulJobs": 3,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 3,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "viper-windows",
+      "version": "1.25.14",
+      "successfulJobs": 3,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 3,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "viper-windows",
+      "version": "1.23.12",
+      "successfulJobs": 2,
+      "exactHits": 0,
+      "misses": 0,
+      "unknown": 2,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "cli-linux",
+      "version": "1.26.8",
+      "successfulJobs": 115,
+      "exactHits": 103,
+      "misses": 12,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "cli-linux",
+      "version": "1.27.1",
+      "successfulJobs": 91,
+      "exactHits": 61,
+      "misses": 30,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 30,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "cli-windows",
+      "version": "1.26.8",
+      "successfulJobs": 115,
+      "exactHits": 103,
+      "misses": 12,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 0,
+      "missesWithSameRunOtherVersion": 0
+    },
+    {
+      "caseId": "cli-windows",
+      "version": "1.27.1",
+      "successfulJobs": 91,
+      "exactHits": 61,
+      "misses": 30,
+      "unknown": 0,
+      "missesWithEarlierOtherVersionScopeEvidence": 30,
+      "missesWithSameRunOtherVersion": 0
+    }
+  ],
+  "coverage": {
+    "client_golang/Linux/arm64": {
+      "jobs": 266,
+      "successfulJobs": 256,
+      "setupReached": 266,
+      "setupSucceeded": 265,
+      "runnerSeconds": 8592
+    },
+    "client_golang/Linux/x64": {
+      "jobs": 264,
+      "successfulJobs": 231,
+      "setupReached": 264,
+      "setupSucceeded": 262,
+      "runnerSeconds": 40745
+    },
+    "client_golang/Windows/x64": {
+      "jobs": 266,
+      "successfulJobs": 237,
+      "setupReached": 266,
+      "setupSucceeded": 263,
+      "runnerSeconds": 47672
+    },
+    "viper/Linux/x64": {
+      "jobs": 12,
+      "successfulJobs": 12,
+      "setupReached": 12,
+      "setupSucceeded": 12,
+      "runnerSeconds": 415
+    },
+    "viper/Windows/x64": {
+      "jobs": 9,
+      "successfulJobs": 8,
+      "setupReached": 9,
+      "setupSucceeded": 9,
+      "runnerSeconds": 537
+    },
+    "cli/Windows/x64": {
+      "jobs": 412,
+      "successfulJobs": 412,
+      "setupReached": 412,
+      "setupSucceeded": 412,
+      "runnerSeconds": 159142
+    },
+    "cli/Linux/x64": {
+      "jobs": 412,
+      "successfulJobs": 412,
+      "setupReached": 412,
+      "setupSucceeded": 412,
+      "runnerSeconds": 83346
+    }
+  }
+}
