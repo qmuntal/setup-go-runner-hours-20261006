@@ -1,0 +1,15 @@
+name: Paired setup-go workflow measurement
+description: Run unmodified setup/post action bundles and pinned upstream tests, with process-tree memory sampling.
+inputs:
+  case:
+    required: true
+    description: Pinned workflow case identifier.
+  version:
+    required: true
+    description: Exact Go version installed before the measurement.
+  sample:
+    required: true
+    description: Independent paired runner sample index.
+runs:
+  using: node24
+  main: entry.mjs
